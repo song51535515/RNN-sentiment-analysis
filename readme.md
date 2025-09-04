@@ -12,7 +12,6 @@
 ## 项目结构
 
 
-plaintext
 
 ```plaintext
 .
