@@ -56,7 +56,7 @@ def main():
 
 ```
 爬取结果csv文件如图所示
-![输入图片说明](/imgs/2025-09-04/HYJlMRlaB394gykt.jpeg)
+![输入图片说明](/img/1.jpg)
 dataframe输出
 ![输入图片说明](/imgs/2025-09-04/kiNTDNI2T5rHYC4g.jpeg)
 #### 数据清洗
