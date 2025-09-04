@@ -193,6 +193,9 @@ $$g \leftarrow min(1, \frac{\theta}{||g||})g$$
     # 模型训练
     def train(net, train_iter, test_iter, loss, updater, num_epochs, device)
    ```
+最终模型的部分运行结果如图所示
+![输入图片说明](/img/图片6.png)
+
 用 classification_report() 函数得到RNN模型每个类别的预
 测**准确率**，**精确率**，**召回率**以及**F1分数**的各项指标值。
 ![输入图片说明](/img/图片1.png)
