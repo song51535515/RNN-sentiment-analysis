@@ -15,7 +15,7 @@
 <h2 id="项目结构"><span class="prefix"></span><span class="content">项目结构</span><span class="suffix"></span></h2>
 <p>plaintext</p>
 <pre class=" language-plaintext"><code class="prism  language-plaintext">.
-├── gatdata.py            # 评论数据爬取与预处理脚本
+├── gatdata.ipynb         # 评论数据爬取与预处理脚本
 ├── rnn_model.ipynb       # RNN情感分类模型实现
 ├── alldata/              # 训练集与测试集数据
 │   ├── train-all.csv
@@ -25,7 +25,7 @@
 └── RNN.parameters  
 </code></pre>
 <h2 id="模块详解"><span class="prefix"></span><span class="content">模块详解</span><span class="suffix"></span></h2>
-<h3 id="1.-数据爬取与预处理（getdata.py）"><span class="prefix"></span><span class="content">1. 数据爬取与预处理（<a href="http://getdata.py">getdata.py</a>）</span><span class="suffix"></span></h3>
+<h3 id="1.-数据爬取与预处理（getdata.ipynb）"><span class="prefix"></span><span class="content">1. 数据爬取与预处理（<a href="http://getdata.py">getdata.py</a>）</span><span class="suffix"></span></h3>
 <h4 id="功能说明"><span class="prefix"></span><span class="content">功能说明</span><span class="suffix"></span></h4>
 <ul>
 <li>从网络 API 批量爬取用户评论数据（支持时间范围筛选）</li>
