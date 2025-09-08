@@ -169,7 +169,7 @@ The specific cutting method is shown in the following formula:
 
 $$g \leftarrow min(1, \frac{\theta}{||g||})g$$
 
-Where,  $||g||$represents **the two norm of gradient**, and  $\theta$ represents **setting range**.
+Where,  $||g||$ represents **the two norm of gradient**, and  $\theta$ represents **setting range**.
    ```python
     # Gradient clipping (prevent gradient explosion)
     def grad_clipping(net, theta)
@@ -192,5 +192,6 @@ Confusion matrix
 ![输入图片说明](/img/图片2.png)
 
 It is easy to observe that the overall evaluation accuracy is exactly equal to the proportion of Category 3 in the total test set. Additionally, the first and second columns of the confusion matrix are entirely zero, indicating that the model did not classify any corpus into Category 1 or Category 2. This makes it clear that **the model lacks the ability to recognize Categories 1 and 2**, and it simply predicts all data as Category 3.
+
 This issue arises because Category 3 accounts for a disproportionately large share of the total sample pool. To address this, we need to adjust the data volume in both the training and test sets. The goal of this adjustment is to ensure that the model achieves **non-zero prediction accuracy for all three categories**—meaning it gains the ability to predict each category effectively. After such adjustments, the model’s actual accuracy stands at approximately 70%.
 ![输入图片说明](/img/图片3.png)
