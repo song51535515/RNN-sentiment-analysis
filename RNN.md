@@ -123,7 +123,7 @@ def read_comments(train_file, test_file)
 # Generate word tokens
 def create_tokens(train_array, test_array)
 ```
-2.  ** Generate Word Vector**    
+2.  **Generate Word Vector**    
 ```python
     # Word2vec to generate word vectors
     def word_vec(tokens):
