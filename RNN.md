@@ -142,8 +142,7 @@ Output $O$:
 
 $$O_{t} = H_{t}W_{hq} + b_q$$
 
-Added ${H}_{t-1}$ represents the previous time sequence **hidden state.** ${W}_{hh}$ represents its corresponding **weight matrix**, and  $O_{t}$ represents the output **of time period t**.
-
+Added $H_{t-1}$ represents the previous time sequence **hidden state**, $W_{hh}$ represents its corresponding **weight matrix**, and $o_t$ represents the output of **time period $t$**.
 As follows:
 ![输入图片说明](/img/4.jpg)
 
