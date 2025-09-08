@@ -130,7 +130,7 @@ def create_tokens(train_array, test_array)
         model = Word2Vec(tokens, sg=0, vector_size=300, window=5, min_count=1, epochs=7, negative=10)
 ```
      
-3.  **Model Constructio**
+3.  **Model Construction**
 
 The formula of RNN is as follows.
 
