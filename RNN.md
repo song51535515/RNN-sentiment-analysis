@@ -106,15 +106,14 @@ The data after cleaning
 ![输入图片说明](/img/3.jpg)
 
 
-### 2. RNN Sentiment Classification Model(rnn_model.ipynb)
+### Part 2. RNN Sentiment Classification Model(rnn_model.ipynb)
 
-#### Model Overview
+#### Model Description
 
 To implement three-class sentiment classification using Recurrent Neural Networks (RNN), we utilize Word2Vec for word vector representation to capture text sequence features and achieve sentiment judgment.
 
-#### Core Process
 
-1.  **Data Reading and Preprocessing**
+#### Data Reading and Preprocessing
 
 ```python
 # Read training set and test set
@@ -123,14 +122,14 @@ def read_comments(train_file, test_file)
 # Generate word tokens
 def create_tokens(train_array, test_array)
 ```
-2.  **Generate Word Vector**    
+#### Generate Word Vector    
 ```python
     # Word2vec to generate word vectors
     def word_vec(tokens):
         model = Word2Vec(tokens, sg=0, vector_size=300, window=5, min_count=1, epochs=7, negative=10)
 ```
      
-3.  **Model Construction**
+#### Model Construction
 
 The formula of RNN is as follows.
 
@@ -162,7 +161,7 @@ However, it is necessary to convert all comment statements into vectors and inpu
    ```
     
           
-4.  **Model Training and Evaluation**
+#### Model Training and Evaluation
 Gradient clipping is a method of restricting gradients to prevent the occurrence of **gradient explosion** and to avoid affecting model training.
 The specific cutting method is shown in the following formula:
 
