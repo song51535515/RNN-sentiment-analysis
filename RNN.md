@@ -128,7 +128,7 @@ DataFrame output:
 ![输入图片说明](/img/2.jpg)
 
 #### Data Cleaning
-- Raw data format: name (username), like count (city), content (review text), score (rating), time (review time)
+- Raw data format: name (username), likes (like count), content (review text), score (rating), time (review time)
 - Processed format: content (raw review), score (three-class sentiment: 1 - Negative / 2 - Neutral / 3 - Positive), content_cut (tokenized result)
 
 ```python
