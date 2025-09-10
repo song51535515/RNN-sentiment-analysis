@@ -1,6 +1,6 @@
 # Sentiment Analysis of Movie Reviews Based on RNN
 
-This project implements a complete sentiment analysis pipeline for The Wandering Earth reviews from Maoyan, covering the full process from **data acquisition**, **preprocessing**, **model construction**, to **sentiment classification**. The collected reviews are cleaned and processed, and a deep learning model (RNN) is applied to achieve three-class sentiment classification (positive/neutral/negative).
+This project implements a complete sentiment analysis pipeline for The Wandering Earth reviews from Douban, covering the full process from **data acquisition**, **preprocessing**, **model construction**, to **sentiment classification**. The collected reviews are cleaned and processed, and a deep learning model (RNN) is applied to achieve three-class sentiment classification (positive/neutral/negative).
 
 ## Key Features
 - **Review Data Crawling**: Batch collection of user reviews with ratings from the web  
