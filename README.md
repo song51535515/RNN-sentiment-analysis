@@ -139,7 +139,7 @@ import jieba
 
 data = pd.read_csv('./comments_new.csv').astype(str)
 # , names=['Name', 'Area', 'comment', 'star', 'time'])
-data['score'] = data['score'].replace(regex=True, inplace=False, to_replace=['nan'], value='')
+data['score'] = data['score'].replace(regex=True, inplace=False, to_replace=['无评分'], value='')
 data1 = data[~data['score'].isin(['0', ' '])]
 data1['score'] = pd.to_numeric(data1['score'], errors='coerce')
 data1['score'] = data1['score'].apply(
