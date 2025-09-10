@@ -1,6 +1,6 @@
 # Sentiment Analysis of Movie Reviews Based on RNN
 
-This project implements a complete sentiment analysis pipeline for The Wandering Earth reviews from Maoyan, covering the full process from **data acquisition**, **preprocessing**, **model construction**, to **sentiment classification**. The collected reviews are cleaned and processed, and a deep learning model (RNN) is applied to achieve three-class sentiment classification (positive/neutral/negative).
+This project implements a complete sentiment analysis pipeline for The Wandering Earth reviews from Douban, covering the full process from **data acquisition**, **preprocessing**, **model construction**, to **sentiment classification**. The collected reviews are cleaned and processed, and a deep learning model (RNN) is applied to achieve three-class sentiment classification (positive/neutral/negative).
 
 ## Key Features
 - **Review Data Crawling**: Batch collection of user reviews with ratings from the web  
@@ -28,20 +28,96 @@ This project implements a complete sentiment analysis pipeline for The Wandering
 #### Core Functions
 ```python
 # Request API data
-def requestApi(url):
+get_page_content(page):
     # HTTP request with headers
 
-# Parse review data
-def getData(html):
-    # Extract reviewer, city, content, rating, time, etc.
-
 # Save data to CSV
-def saveData(comments, is_first):
-    # CSV writing with header control
+save_to_csv(data, is_first_page=False):
+    # CSV writing
 
-# Main crawler function
-def main():
-    # Time-range control and batch crawling logic
+# Number of pages to crawl
+total_pages = 4  # Can be modified as needed
+
+# Store all crawling results
+all_results = {
+    'name': [],
+    'likes': [],
+    'content': [],
+    'score': [],
+    'time': []
+}
+
+for page in range(total_pages):
+    print(f"Crawling page {page+1}...")
+    
+    # Get current page content
+    html_content = get_page_content(page)
+    if not html_content:
+        continue
+    
+    # Parse page content
+    soup = BeautifulSoup(html_content, 'lxml')
+
+    # Extract username - handle possible None values
+    list_name = [a.string if a and a.string else '' for a in soup.select('.comment .comment-info a')]
+
+    # Extract number of likes
+    list_like = [span.string if span and span.string else '0' for span in soup.select('.comment .comment-vote span')]
+
+    # Extract comment time - check existence before calling strip()
+    list_time = []
+    for span in soup.select('.comment .comment-info .comment-time'):
+        if span and span.string:
+            list_time.append(span.string.strip())
+        else:
+            list_time.append('')
+
+    list_rating = []
+    for span in soup.select('span[class*="allstar"][class*="rating"]'):
+        # Extract rating value from class
+        if span and 'class' in span.attrs:
+            class_str = ' '.join(span['class'])
+            for part in class_str.split():
+                if part.startswith('allstar'):
+                    rating = part.replace('allstar', '')
+                    list_rating.append(str(int(rating)/10))
+                    break
+        else:
+            list_rating.append('No rating')
+
+    # Extract comment content
+    list_data = [span.string if span and span.string else '' for span in soup.select('.comment-content .short')]
+    
+    # Ensure rating list length matches other lists
+    while len(list_rating) < len(list_name):
+        list_rating.append('No rating')
+    
+    # Add current page data to all results
+    all_results['name'].extend(list_name)
+    all_results['likes'].extend(list_like)
+    all_results['content'].extend(list_data)
+    all_results['score'].extend(list_rating)
+    all_results['time'].extend(list_time)
+    
+    # Prepare current page data for CSV writing
+    page_data = []
+    for i in range(len(list_name)):
+        page_data.append({
+            'name': list_name[i],
+            'likes': list_like[i],
+            'content': list_data[i],
+            'score': list_rating[i],
+            'time': list_time[i]
+        })
+    
+    # Write to CSV file, only write header for first page
+    save_to_csv(page_data, page == 0)
+    
+    print(f"Page {page+1} crawling completed, obtained {len(list_name)} comments(s), already written to CSV file\n")
+
+# Print total results statistics
+print(f"All pages crawling completed, total {len(all_results['name'])} comment(s) obtained")
+print("Results saved to 'comments_new.csv' file")
 ```
 The resulting CSV file looks like this:
 
@@ -52,7 +128,7 @@ DataFrame output:
 ![输入图片说明](/img/2.jpg)
 
 #### Data Cleaning
-- Raw data format: nickName (username), cityName (city), content (review text), score (rating), startTime (review time)
+- Raw data format: name (username), likes (like count), content (review text), score (rating), time (review time)
 - Processed format: content (raw review), score (three-class sentiment: 1 - Negative / 2 - Neutral / 3 - Positive), content_cut (tokenized result)
 
 ```python
@@ -63,7 +139,7 @@ import jieba
 
 data = pd.read_csv('./comments_new.csv').astype(str)
 # , names=['Name', 'Area', 'comment', 'star', 'time'])
-data['score'] = data['score'].replace(regex=True, inplace=False, to_replace=['nan'], value='')
+data['score'] = data['score'].replace(regex=True, inplace=False, to_replace=['No rating'], value='')
 data1 = data[~data['score'].isin(['0', ' '])]
 data1['score'] = pd.to_numeric(data1['score'], errors='coerce')
 data1['score'] = data1['score'].apply(
@@ -193,4 +269,5 @@ Confusion matrix
 It is easy to observe that the overall evaluation accuracy is exactly equal to the proportion of Category 3 in the total test set. Additionally, the first and second columns of the confusion matrix are entirely zero, indicating that the model did not classify any corpus into Category 1 or Category 2. This makes it clear that **the model cannot recognize Categories 1 and 2**, and it simply predicts all data as Category 3.
 
 This issue arises because Category 3 accounts for a disproportionately large share of the total sample pool. To address this, we need to adjust the data volume in both the training and test sets. The goal of this adjustment is to ensure that the model achieves **non-zero prediction accuracy for all three categories**—meaning it gains the ability to predict each category effectively. After such adjustments, the model’s actual accuracy stands at approximately 70%.
+
 ![输入图片说明](/img/图片3.png)
